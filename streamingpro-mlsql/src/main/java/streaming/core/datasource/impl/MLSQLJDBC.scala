@@ -240,7 +240,7 @@ class MLSQLJDBC(override val uid: String) extends MLSQLSource with MLSQLSink wit
         writer.format(format).save(dbtable)
       } catch {
         case e: Exception ⇒
-          if (url.isDefined && url.get.startsWith("jdbc:hive2")) {
+          if (url.isDefined && url.get.startsWith("jdbc:hive2") && e.getMessage.contains("Method not supported")) {
             logError("hive jdbc does not support writing! ")
           } else {
             throw e
